@@ -1,11 +1,15 @@
 package main
 
 import (
+	"mygame/handlers"
 	"net/http"
+	//"encoding/json"
 )
 
 func main() {
-	http.HandleFunc("/", HandleHello)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", HandleHello)
+	mux.HandleFunc("/login", (&handlers.AuthHandler{}).Login)
 
 	http.ListenAndServe(":8080", nil)
 }
