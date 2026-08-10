@@ -2,17 +2,23 @@ package handlers
 
 import (
 	"encoding/json"
-	"mygame/models"
-	"mygame/services"
+	"mygame/Models"
+	"mygame/Services"
 	"net/http"
 )
 
 type AuthHandler struct {
-	service *services.AuthService
+	service *Services.AuthService
+}
+
+func NewAuthHandler(service *Services.AuthService) *AuthHandler {
+	return &AuthHandler{
+		service: service,
+	}
 }
 
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
-	var req models.LoginRequest
+	var req Models.LoginRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
@@ -30,7 +36,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := models.LoginResponse{
+	response := Models.LoginResponse{
 		Token: token,
 	}
 
