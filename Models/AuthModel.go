@@ -1,10 +1,10 @@
 package Models
 
 type User struct {
-	ID           string
-	Name         string
-	Email        string
-	PasswordHash string
+	ID       string
+	Name     string
+	Email    string
+	Password string
 }
 
 type LoginRequest struct {

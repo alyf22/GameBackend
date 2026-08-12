@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"mygame/Database"
 	Handlers "mygame/Handlers"
 	"mygame/Repositories"
 	"mygame/Services"
 	"net/http"
-	//"encoding/json"
 )
 
 func main() {
@@ -18,12 +18,13 @@ func main() {
 	authService := Services.NewAuthService(authRepo)
 	authHandler := Handlers.NewAuthHandler(authService)
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", HandleHello)
-	mux.HandleFunc("/login", authHandler.Login)
+	mux.HandleFunc("GET /", HandleHello)
+	mux.HandleFunc("POST /login", authHandler.Login)
+	mux.HandleFunc("POST /register", authHandler.Register)
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", mux)
 }
 
 func HandleHello(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
+	json.NewEncoder(w).Encode(map[string]string{"message": "Hello, World!"})
 }
