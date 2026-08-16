@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"mygame/Database"
-	Handlers "mygame/Handlers"
+	"mygame/Handlers"
 	"mygame/Repositories"
 	"mygame/Services"
 	"net/http"
