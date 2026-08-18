@@ -5,17 +5,19 @@ import (
 )
 
 type SessionHandler struct {
-	service *Services.AuthService
+	service        *Services.AuthService
+	sessionService *Services.SessionService
 }
 
-func NewSessionHandler(authService *Services.AuthService) *SessionHandler {
+func NewSessionHandler(authService *Services.AuthService, sessionService *Services.SessionService) *SessionHandler {
 	return &SessionHandler{
-		service: authService,
+		service:        authService,
+		sessionService: sessionService,
 	}
 }
 
 func (h *SessionHandler) CreateSession(userID string) (string, error) {
-	token, err := Services.GenerateToken(userID)
+	token, err := h.sessionService.CreateToken(userID)
 	if err != nil {
 		return "", err
 	}
@@ -23,7 +25,7 @@ func (h *SessionHandler) CreateSession(userID string) (string, error) {
 }
 
 func (h *SessionHandler) ValidateSession(token string) (string, error) {
-	userID, err := Services.ValidateToken(token)
+	userID, err := h.sessionService.ValidateToken(token)
 	if err != nil {
 		return "", err
 	}
